@@ -1,6 +1,17 @@
 # ESM rebuild
 High level client for rebuilding Elasticsearch indexes from MongoDB persisted data.
 
+## Table of Contents
+====================
+* [Description](#description)
+* [Examples](#examples)
+    * [Complete rebuild](#all-options)
+    * [Index MongoDB data](#index-mongodb-data)
+    * [Rebuild and add mappings](#recreate-index-and-add-mappings)
+    * [Recreate an index](#recreate-index)
+* [Caveats](#caveats)
+* [Disclaimer](#disclaimer)
+
 ## Description
 Being pretty new to Elasticsearch, and only running a very basic architecture, I find myself having to re-index documents a lot. 
 
@@ -19,7 +30,7 @@ Each of these tasks can be performed individually or all at once if you need to 
 Delete and re-create index named `my_index`, put the document mappings from `my_mappings.json` into `my_index`, fetch all Mongo docs from collections `posts` and `comments`, and then index the docs in ES as doctypes of the same name:  
 - `python esm_rebuild.py --rebuild --push --mappings --node 127.0.0.1 --index my_index --doctypes "posts, comments" --host mongohost --db mongo_database --mapfile my_mappings.json`
 
-### Index MongoDB documents
+### Index MongoDB data
 Index all documents from the MongoDB collections `posts` and `comments` to an Elasticsearch instance as doctypes `posts` and `comments`:  
 - `python esm_build.py --push --node 127.0.0.1 --index my_index --doctypes "posts, comments" --host mongohost --db mongo_database`
 
