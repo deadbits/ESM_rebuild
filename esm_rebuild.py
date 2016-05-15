@@ -44,6 +44,7 @@ class ES:
         if mapping.keys()[0] != doc_type:
             fatal('Doctype does not match provide mapping key\n- Mapping: %s\n- Doctype: %s' % (mapping.keys()[0], doc_type))
 
+
     def put_mappings(self, map_path, doc_type):
         data = None
         result = {self.index: {'mappings': {}}}
@@ -184,13 +185,14 @@ if __name__ == '__main__':
     doc_types = args.doctypes if args.doctypes else []
 
     # quick syntax checking
-    if not rebuild or not push_docs or not update_mappings:
+    if not rebuild and not push_docs and not update_mappings:
         fatal('No task selected. Must use any of: --rebuild, --push, --mappings')
 
     if update_mappings and map_path is None:
         fatal('Update mappings selected without specifying path to document mapping JSON file.')
-    elif not os.path.exists(map_path):
-        fatal('Mappings file specified does not exist. (%s)' % map_path)
+    if update_mappings:
+        if not os.path.exists(map_path):
+            fatal('Mappings file specified does not exist. (%s)' % map_path)
 
     if push_docs and (mongo_host is None or mongo_db is None or len(doc_types) == 0):
         fatal('Rebuild selected without specifying MongoDB host, database name, or ES doctype.')
